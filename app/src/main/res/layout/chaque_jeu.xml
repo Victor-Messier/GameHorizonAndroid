@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:autofillHints=""
+        android:background="@drawable/background"
+        tools:layout_editor_absoluteX="-82dp"
+        tools:layout_editor_absoluteY="-48dp">
+
+        <include
+            android:id="@+id/header_jeu"
+            layout="@layout/header" />
+
+        <include
+            android:id="@+id/footerJeu"
+            layout="@layout/footer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline8"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/titreJeu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/nom_jeux"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextSizeCheck" />
+
+            <ImageView
+                android:id="@+id/imageJeu"
+                android:layout_width="0dp"
+                android:layout_height="215dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/image_du_jeux"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titreJeu"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/backgroundchamp"
+                tools:ignore="ImageContrastCheck" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="195dp"
+                android:layout_height="219dp"
+                android:layout_marginEnd="4dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/imageJeu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageJeu"
+                app:layout_constraintTop_toBottomOf="@+id/titreJeu"
+                tools:ignore="VisualLintBounds,TextSizeCheck">
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/description"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/description2"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="@string/d"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/date_sortie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_de_sortie"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/date_sortie2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/s"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/studio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/studio"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/studio2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ss"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="89dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="407dp"
+            android:layout_height="204dp"
+            android:layout_marginTop="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            tools:listitem="@layout/commentaire" />
+
+        <Button
+            android:id="@+id/bouton_ajouter_jeux"
+            android:layout_width="121dp"
+            android:layout_height="63dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="1dp"
+            android:backgroundTint="@color/black"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/ajouter"
+            android:textColor="#00838F"
+            app:layout_constraintBottom_toTopOf="@+id/commentaires_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ecrire_commentaire"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="TouchTargetSizeCheck,VisualLintBounds" />
+
+        <EditText
+            android:id="@+id/ecrire_commentaire"
+            android:layout_width="293dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="3dp"
+            android:ems="10"
+            android:hint="@string/ecrire_un_commentaire"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/commentaires_recycler_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="0.004"
+            tools:ignore="Autofill,UnknownId" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

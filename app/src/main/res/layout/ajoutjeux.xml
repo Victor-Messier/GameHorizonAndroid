@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <include
+        layout="@layout/header"
+        android:id="@+id/header_ajout_jeux" />
+
+    <include
+        android:id="@+id/footerAjoutJeux"
+        layout="@layout/footer" />
+
+    <LinearLayout
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cadre_accueil"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498">
+
+        <TextView
+            android:id="@+id/titreAjoutJeux"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:shadowColor="#40000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:text="@string/ajouter_un_jeu"
+            android:textColor="@color/gray"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/champ_nom_jeux"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/nom_du_jeux"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"/>
+
+        <EditText
+            android:id="@+id/champ_description"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/description2"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"/>
+
+        <EditText
+            android:id="@+id/champ_date_parution"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/date_de_parution"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"/>
+
+        <Spinner
+            android:id="@+id/champ_plateforme"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="@string/plateform2"
+            android:importantForAutofill="no"
+            android:entries="@array/plateformes_array"
+            style="@style/SpinnerThemeBlancTexte"/>
+
+        <EditText
+            android:id="@+id/champ_genre"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/genre"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"/>
+
+        <EditText
+            android:id="@+id/champ_image"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="@string/image_url"
+            android:importantForAutofill="no"
+            android:inputType="textUri"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/bouton_ajouter_jeux"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/black"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/ajouter_un_jeux3"
+            android:textColor="#00838F"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

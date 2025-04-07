@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">gameHorizon</string>
+    <string name="horizon">horizon\n</string>
+    <string name="connexion">Connexion</string>
+    <string name="Accueil">Accueil</string>
+    <string name="accueil">Accueil</string>
+    <string name="Jeu">Jeu</string>
+    <string name="Inscription">Inscription</string>
+    <string name="Connexion">Connexion</string>
+    <string name="Index">Index</string>
+    <string name="Ajout_Jeu">Ajout Jeu</string>
+    <string name="connexion2">Connexion</string>
+    <string name="inscription2">Inscription</string>
+    <string name="connexion3">TODO</string>
+    <string name="todo">TODO</string>
+    <string name="todo2">TODO</string>
+    <string name="todo3">TODO</string>
+    <string name="icone1">icone1</string>
+    <string name="icone2">icone2</string>
+    <string name="icone3">icone3</string>
+    <string name="connexion23">Connexion</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="rectangle">TODO</string>
+    <string name="connexion_au_compte">Connexion au compte</string>
+    <string name="inscription3">Inscription</string>
+    <string name="adresse_courriel">Adresse courriel</string>
+    <string name="confirmation_du_mot_de_passe">Confirmation du mot de passe</string>
+    <string name="nom">Nom</string>
+    <string name="prenom">Prenom</string>
+    <string name="username">Username</string>
+    <string name="date_de_sortie">Date de sortie</string>
+    <string name="s">s</string>
+    <string name="d">d</string>
+    <string name="description">Description</string>
+    <string name="image_du_jeux">TODO</string>
+    <string name="ss">s</string>
+    <string name="studio">Studio</string>
+    <string name="nom_jeux">Nom Jeux</string>
+    <string name="commentaire_commentaire_commentaire_commentaire_commentaire_commentaire_commentaire_commentaire">Commentaire Commentaire Commentaire Commentaire Commentaire Commentaire Commentaire Commentaire</string>
+    <string name="nom_utilisateur">Username</string>
+    <string name="ajouter_un_jeux">Ajouter un jeux</string>
+    <string name="ecrire_un_commentaire">Ecrire un commentaire</string>
+    <string name="is_this_text_visible">Is this text visible?</string>
+    <string name="date_de_sortie2">date de sortie:</string>
+    <string name="notes">notes:</string>
+    <string name="cat_gories">Catégories:</string>
+    <string name="rechercher">Rechercher</string>
+    <string name="plateforme">Plateforme</string>
+    <string name="s_lectionner_une_date">Sélectionner une date</string>
+    <string name="rechercher_un_jeu">Rechercher un jeu</string>
+    <string name="recherche_de_jeux">Recherche de jeux</string>
+    <string name="todo4">TODO</string>
+    <string name="nom_du_jeu">Nom du jeu</string>
+    <string name="recommandation_pour_vous">Recommandation pour vous:</string>
+    <string name="rechercher2">Rechercher</string>
+    <string name="liste_de_jeu">Liste de jeu</string>
+    <string name="rechercher_un_jeu2">Rechercher un jeu</string>
+    <string name="ajouter_un_jeux3">Ajouter un jeux</string>
+    <string name="date_de_parution">Date de parution</string>
+    <string name="description2">Description</string>
+    <string name="genre">Genre</string>
+    <string name="image_url">Image (URL)</string>
+    <string name="nom_du_jeux">Nom du jeux</string>
+    <string name="plateform2">Plateforme</string>
+    <string name="ajouter_un_jeu">Ajouter un jeu</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="recommandation">Recommandation</string>
+
+    <string-array name="plateformes_array">
+        <item>Sélectionner une plateforme</item>
+        <item>PC</item>
+        <item>PlayStation 5</item>
+        <item>Xbox Series X/S</item>
+        <item>Nintendo Switch</item>
+        <item>Casque VR</item>
+    </string-array>
+
+
+    <string-array name="slider_values">
+        <item>1</item>
+        <item>5</item>
+    </string-array>
+
+
+</resources>
