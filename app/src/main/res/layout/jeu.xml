@@ -109,7 +109,8 @@
                 android:contentDescription="@string/todo3"
                 android:stepSize="1"
                 android:valueFrom="0"
-                android:valueTo="5" />
+                android:valueTo="5"
+                tools:ignore="DuplicateSpeakableTextCheck" />
         </LinearLayout>
 
         <LinearLayout
