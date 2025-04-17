@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class jeu extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView items;
+    //Salut
     View header, footer;
 
     TextView headerText;
