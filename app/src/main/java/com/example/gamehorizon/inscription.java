@@ -59,7 +59,7 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(inscription.this, jeu.class);
+            Intent intent = new Intent(inscription.this, Recherche.class);
             startActivity(intent);
         }
     }

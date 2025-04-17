@@ -25,7 +25,7 @@
         <activity android:name=".connexion"></activity>
         <activity android:name=".pagePrincipal"></activity>
         <activity android:name=".inscription"></activity>
-        <activity android:name=".jeu"></activity>
+        <activity android:name=".Recherche"></activity>
         <activity android:name=".jeuCommentaire"></activity>
     </application>
 

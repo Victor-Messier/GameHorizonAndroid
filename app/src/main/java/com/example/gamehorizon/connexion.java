@@ -59,7 +59,7 @@ public class connexion extends AppCompatActivity implements View.OnClickListener
             startActivity(intent);
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(connexion.this, jeu.class);
+            Intent intent = new Intent(connexion.this, Recherche.class);
             startActivity(intent);
         }
     }

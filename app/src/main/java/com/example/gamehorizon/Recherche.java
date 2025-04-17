@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class jeu extends AppCompatActivity implements View.OnClickListener {
+public class Recherche extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView items;
     //Salut
@@ -21,7 +21,7 @@ public class jeu extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.jeu);
+        setContentView(R.layout.recherche);
 
         header = findViewById(R.id.header_chaque_jeu);
         footer = findViewById(R.id.footer_chaque_jeu);
@@ -46,23 +46,23 @@ public class jeu extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == page_accueil){
-            Intent intent = new Intent(jeu.this, MainActivity.class);
+            Intent intent = new Intent(Recherche.this, MainActivity.class);
             startActivity(intent);
         }
         else if (v == page_connexion){
-            Intent intent = new Intent(jeu.this, connexion.class);
+            Intent intent = new Intent(Recherche.this, connexion.class);
             startActivity(intent);
         }
         else if (v == page_principal){
-            Intent intent = new Intent(jeu.this, pagePrincipal.class);
+            Intent intent = new Intent(Recherche.this, pagePrincipal.class);
             startActivity(intent);
         }
         else if (v == page_ajoutJeu){
-            Intent intent = new Intent(jeu.this, ajoutJeux.class);
+            Intent intent = new Intent(Recherche.this, ajoutJeux.class);
             startActivity(intent);
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(jeu.this, jeu.class);
+            Intent intent = new Intent(Recherche.this, Recherche.class);
             startActivity(intent);
         }
     }

@@ -59,7 +59,7 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(jeuCommentaire.this, jeu.class);
+            Intent intent = new Intent(jeuCommentaire.this, Recherche.class);
             startActivity(intent);
         }
     }

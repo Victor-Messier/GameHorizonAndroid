@@ -59,7 +59,7 @@ public class pagePrincipal extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(pagePrincipal.this, jeu.class);
+            Intent intent = new Intent(pagePrincipal.this, Recherche.class);
             startActivity(intent);
         }
     }

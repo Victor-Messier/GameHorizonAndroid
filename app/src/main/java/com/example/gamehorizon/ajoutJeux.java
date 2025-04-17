@@ -60,7 +60,7 @@ public class ajoutJeux extends AppCompatActivity implements View.OnClickListener
             startActivity(intent);
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(ajoutJeux.this, jeu.class);
+            Intent intent = new Intent(ajoutJeux.this, Recherche.class);
             startActivity(intent);
         }
     }
