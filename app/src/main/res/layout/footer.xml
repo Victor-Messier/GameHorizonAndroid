@@ -16,19 +16,19 @@
         tools:ignore="VisualLintBounds">
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/icone_accueil"
             android:layout_width="81dp"
             android:layout_height="70dp"
             android:contentDescription="@string/icone1"
             android:onClick="onClickImageViewBouton"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView7"
+            app:layout_constraintEnd_toStartOf="@+id/icone_page_recherche"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/maison" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/icone_page_recherche"
             android:layout_width="81dp"
             android:layout_height="70dp"
             android:contentDescription="@string/icone2"
@@ -40,7 +40,7 @@
             app:srcCompat="@drawable/jeux" />
 
         <ImageView
-            android:id="@+id/imageView8"
+            android:id="@+id/icone_page_ajoutJeux"
             android:layout_width="81dp"
             android:layout_height="70dp"
             android:contentDescription="@string/icone3"
@@ -48,7 +48,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.527"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintStart_toEndOf="@+id/icone_page_recherche"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.47"
             app:srcCompat="@drawable/ajoutjeux" />

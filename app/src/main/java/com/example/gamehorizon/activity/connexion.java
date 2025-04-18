@@ -1,4 +1,4 @@
-package com.example.gamehorizon;
+package com.example.gamehorizon.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.gamehorizon.R;
 
 public class connexion extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,11 +29,11 @@ public class connexion extends AppCompatActivity implements View.OnClickListener
 
         headerText.setText(getString(R.string.connexion));
 
-        page_accueil = header.findViewById(R.id.imageView2);
-        page_connexion = header.findViewById(R.id.imageView);
-        page_principal = footer.findViewById(R.id.imageView5);
-        page_ajoutJeu = footer.findViewById(R.id.imageView8);
-        page_jeu = footer.findViewById(R.id.imageView7);
+        page_accueil = header.findViewById(R.id.page_accueil_horizon);
+        page_connexion = header.findViewById(R.id.page_connexion);
+        page_principal = footer.findViewById(R.id.icone_accueil);
+        page_ajoutJeu = footer.findViewById(R.id.icone_page_ajoutJeux);
+        page_jeu = footer.findViewById(R.id.icone_page_recherche);
 
         page_accueil.setOnClickListener(this);
         page_connexion.setOnClickListener(this);
@@ -51,7 +53,7 @@ public class connexion extends AppCompatActivity implements View.OnClickListener
             startActivity(intent);
         }
         else if (v == page_principal){
-            Intent intent = new Intent(connexion.this, pagePrincipal.class);
+            Intent intent = new Intent(connexion.this, Recommandation.class);
             startActivity(intent);
         }
         else if (v == page_ajoutJeu){

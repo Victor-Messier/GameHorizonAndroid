@@ -1,4 +1,4 @@
-package com.example.gamehorizon;
+package com.example.gamehorizon.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +7,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class inscription extends AppCompatActivity implements View.OnClickListener {
+import com.example.gamehorizon.R;
 
+public class Recherche extends AppCompatActivity implements View.OnClickListener {
+
+    RecyclerView items;
+    //Salut
     View header, footer;
 
     TextView headerText;
@@ -18,20 +23,20 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inscription);
+        setContentView(R.layout.recherche);
 
-        header = findViewById(R.id.header_inscription);
-        footer = findViewById(R.id.footerInscription);
+        header = findViewById(R.id.header_chaque_jeu);
+        footer = findViewById(R.id.footer_chaque_jeu);
 
         headerText = header.findViewById(R.id.titre_page);
 
-        headerText.setText(getString(R.string.Inscription));
+        headerText.setText(getString(R.string.Jeu));
 
-        page_accueil = header.findViewById(R.id.imageView2);
-        page_connexion = header.findViewById(R.id.imageView);
-        page_principal = footer.findViewById(R.id.imageView5);
-        page_ajoutJeu = footer.findViewById(R.id.imageView8);
-        page_jeu = footer.findViewById(R.id.imageView7);
+        page_accueil = header.findViewById(R.id.page_accueil_horizon);
+        page_connexion = header.findViewById(R.id.page_connexion);
+        page_principal = footer.findViewById(R.id.icone_accueil);
+        page_ajoutJeu = footer.findViewById(R.id.icone_page_ajoutJeux);
+        page_jeu = footer.findViewById(R.id.icone_page_recherche);
 
         page_accueil.setOnClickListener(this);
         page_connexion.setOnClickListener(this);
@@ -43,23 +48,23 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v == page_accueil){
-            Intent intent = new Intent(inscription.this, MainActivity.class);
+            Intent intent = new Intent(Recherche.this, MainActivity.class);
             startActivity(intent);
         }
         else if (v == page_connexion){
-            Intent intent = new Intent(inscription.this, connexion.class);
+            Intent intent = new Intent(Recherche.this, connexion.class);
             startActivity(intent);
         }
         else if (v == page_principal){
-            Intent intent = new Intent(inscription.this, pagePrincipal.class);
+            Intent intent = new Intent(Recherche.this, Recommandation.class);
             startActivity(intent);
         }
         else if (v == page_ajoutJeu){
-            Intent intent = new Intent(inscription.this, ajoutJeux.class);
+            Intent intent = new Intent(Recherche.this, ajoutJeux.class);
             startActivity(intent);
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(inscription.this, Recherche.class);
+            Intent intent = new Intent(Recherche.this, Recherche.class);
             startActivity(intent);
         }
     }
