@@ -25,10 +25,6 @@ import com.example.gamehorizon.JeuxAdapter;
 import com.example.gamehorizon.Plateform;
 import com.example.gamehorizon.R;
 import com.example.gamehorizon.RequeteAPI;
-import com.example.gamehorizon.activity.MainActivity;
-import com.example.gamehorizon.activity.Recommandation;
-import com.example.gamehorizon.activity.ajoutJeux;
-import com.example.gamehorizon.activity.connexion;
 import com.google.android.material.slider.Slider;
 
 import org.json.JSONArray;
@@ -38,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recherche extends AppCompatActivity implements View.OnClickListener {
+public class Recherche extends AppCompatActivity implements View.OnClickListener, JeuxAdapter.OnItemClickListener { // 1. Implémentez JeuxAdapter.OnItemClickListener
 
     RecyclerView items;
     View header, footer;
@@ -79,12 +75,12 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         page_jeu = footer.findViewById(R.id.icone_page_recherche);
 
         items = findViewById(R.id.recyclerView);
-        textNom = items.findViewById(R.id.gameNameTextView);
+        textNom = items.findViewById(R.id.gameNameTextView); // Pas nécessaire ici
 
         items.setLayoutManager(new LinearLayoutManager(this));
-        jeuxAdapter = new JeuxAdapter(listeJeux);
+        jeuxAdapter = new JeuxAdapter(listeJeux, this); // 2. Passez 'this' comme listener à l'adaptateur
         items.setAdapter(jeuxAdapter);
-        imageJeu = items.findViewById(R.id.gameImageView);
+        imageJeu = items.findViewById(R.id.gameImageView); // Pas nécessaire ici
         requeteAPI = new RequeteAPI(this);
 
         textRechercheJeu = findViewById(R.id.rechercheJeuTextView);
@@ -126,6 +122,14 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
             Intent intent = new Intent(Recherche.this, Recherche.class);
             startActivity(intent);
         }
+    }
+
+    // 3. Implémentez la méthode onItemClick de l'interface JeuxAdapter.OnItemClickListener
+    @Override
+    public void onItemClick(Jeu jeu) {
+        Intent jeuInfo = new Intent(Recherche.this, jeuCommentaire.class);
+        jeuInfo.putExtra("ID_JEU", jeu.getId());
+        startActivity(jeuInfo);
     }
 
     public void remplirSpinner() {
@@ -339,7 +343,10 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
                         );
                         listeJeux.add(jeu);
                     }
-                    jeuxAdapter.notifyDataSetChanged();
+                    // ici avant : jeuxAdapter.notifyDataSetChanged();
+                    // Mettre à jour l'adaptateur avec la nouvelle liste et le listener
+                    jeuxAdapter = new JeuxAdapter(listeJeux, Recherche.this); // Réinitialisez l'adaptateur avec le listener
+                    items.setAdapter(jeuxAdapter); // Réaffectez l'adaptateur au RecyclerView
                 } catch (JSONException e) {
                     Log.e(TAG, "Erreur lors du parsing JSON", e);
                     Toast.makeText(Recherche.this, "Erreur lors du traitement des données des jeux", Toast.LENGTH_SHORT).show();

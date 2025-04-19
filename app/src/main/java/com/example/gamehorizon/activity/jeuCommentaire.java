@@ -2,6 +2,7 @@ package com.example.gamehorizon.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
     View header, footer;
 
     TextView headerText;
+    private static final String TAG = "jeuCommentaire";
+    private int idJeu;
 
     ImageView page_accueil, page_connexion, page_principal, page_ajoutJeu, page_jeu;
     @Override
@@ -22,8 +25,8 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.jeu);
 
-        header = findViewById(R.id.header_chaque_jeu);
-        footer = findViewById(R.id.footer_chaque_jeu);
+        header = findViewById(R.id.header_jeu);
+        footer = findViewById(R.id.footerJeu);
 
         headerText = header.findViewById(R.id.titre_page);
 
@@ -40,6 +43,11 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
         page_principal.setOnClickListener(this);
         page_ajoutJeu.setOnClickListener(this);
         page_jeu.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        idJeu = intent.getIntExtra("ID_JEU",1);
+        Log.d(TAG,"L'id du jeu choisi est: " + idJeu);
+
     }
 
     @Override
