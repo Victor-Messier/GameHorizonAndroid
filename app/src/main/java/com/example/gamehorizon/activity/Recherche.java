@@ -1,4 +1,4 @@
-package com.example.gamehorizon;
+package com.example.gamehorizon.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
+import com.example.gamehorizon.Categorie;
+import com.example.gamehorizon.Jeu;
+import com.example.gamehorizon.JeuxAdapter;
+import com.example.gamehorizon.Plateform;
+import com.example.gamehorizon.R;
+import com.example.gamehorizon.RequeteAPI;
+import com.example.gamehorizon.activity.MainActivity;
+import com.example.gamehorizon.activity.Recommandation;
+import com.example.gamehorizon.activity.ajoutJeux;
+import com.example.gamehorizon.activity.connexion;
 import com.google.android.material.slider.Slider;
 
 import org.json.JSONArray;
@@ -62,11 +72,11 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
 
         headerText.setText(getString(R.string.Jeu));
 
-        page_accueil = header.findViewById(R.id.imageViewAccueil);
-        page_connexion = header.findViewById(R.id.imageViewConnexion);
-        page_principal = footer.findViewById(R.id.imageViewPagePrincipal);
-        page_ajoutJeu = footer.findViewById(R.id.imageViewAjoutJeu);
-        page_jeu = footer.findViewById(R.id.imageViewJeu);
+        page_accueil = header.findViewById(R.id.page_accueil_horizon);
+        page_connexion = header.findViewById(R.id.page_connexion);
+        page_principal = footer.findViewById(R.id.icone_accueil);
+        page_ajoutJeu = footer.findViewById(R.id.icone_page_ajoutJeux);
+        page_jeu = footer.findViewById(R.id.icone_page_recherche);
 
         items = findViewById(R.id.recyclerView);
         textNom = items.findViewById(R.id.gameNameTextView);
@@ -105,7 +115,7 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
             startActivity(intent);
         }
         else if (v == page_principal){
-            Intent intent = new Intent(Recherche.this, pagePrincipal.class);
+            Intent intent = new Intent(Recherche.this, Recommandation.class);
             startActivity(intent);
         }
         else if (v == page_ajoutJeu){

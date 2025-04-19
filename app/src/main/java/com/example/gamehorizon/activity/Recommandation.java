@@ -61,7 +61,7 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(Recommandation.this, Recherche.class);
+            Intent intent = new Intent(Recommandation.this, com.example.gamehorizon.activity.Recherche.class);
             startActivity(intent);
         }
     }
