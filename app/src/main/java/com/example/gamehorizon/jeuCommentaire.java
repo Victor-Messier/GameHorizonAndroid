@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class jeuCommentaire extends AppCompatActivity implements View.OnClickListener {
 
     View header, footer;
-
+//teste
     TextView headerText;
 
     ImageView page_accueil, page_connexion, page_principal, page_ajoutJeu, page_jeu;
@@ -27,11 +27,11 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
 
         headerText.setText(getString(R.string.Index));
 
-        page_accueil = header.findViewById(R.id.imageView2);
-        page_connexion = header.findViewById(R.id.imageView);
-        page_principal = footer.findViewById(R.id.imageView5);
-        page_ajoutJeu = footer.findViewById(R.id.imageView8);
-        page_jeu = footer.findViewById(R.id.imageView7);
+        page_accueil = header.findViewById(R.id.imageViewAccueil);
+        page_connexion = header.findViewById(R.id.imageViewConnexion);
+        page_principal = footer.findViewById(R.id.imageViewPagePrincipal);
+        page_ajoutJeu = footer.findViewById(R.id.imageViewAjoutJeu);
+        page_jeu = footer.findViewById(R.id.imageViewJeu);
 
         page_accueil.setOnClickListener(this);
         page_connexion.setOnClickListener(this);

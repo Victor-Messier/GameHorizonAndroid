@@ -30,11 +30,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         headerText.setText(getString(R.string.accueil));
 
-        page_accueil = header.findViewById(R.id.imageView2);
-        page_connexion = header.findViewById(R.id.imageView);
-        page_principal = footer.findViewById(R.id.imageView5);
-        page_ajoutJeu = footer.findViewById(R.id.imageView8);
-        page_jeu = footer.findViewById(R.id.imageView7);
+        page_accueil = header.findViewById(R.id.imageViewAccueil);
+        page_connexion = header.findViewById(R.id.imageViewConnexion);
+        page_principal = footer.findViewById(R.id.imageViewPagePrincipal);
+        page_ajoutJeu = footer.findViewById(R.id.imageViewAjoutJeu);
+        page_jeu = footer.findViewById(R.id.imageViewJeu);
 
         connexion = findViewById(R.id.connexion);
         inscription = findViewById(R.id.inscription);

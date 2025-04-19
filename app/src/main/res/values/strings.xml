@@ -46,7 +46,7 @@
     <string name="cat_gories">Catégories:</string>
     <string name="rechercher">Rechercher</string>
     <string name="plateforme">Plateforme</string>
-    <string name="s_lectionner_une_date">Sélectionner une date</string>
+    <string name="s_lectionner_une_date">Entrer une date (Ex:2005)</string>
     <string name="rechercher_un_jeu">Rechercher un jeu</string>
     <string name="recherche_de_jeux">Recherche de jeux</string>
     <string name="todo4">TODO</string>
