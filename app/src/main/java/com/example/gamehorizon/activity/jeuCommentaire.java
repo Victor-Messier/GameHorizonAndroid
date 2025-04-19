@@ -1,4 +1,4 @@
-package com.example.gamehorizon;
+package com.example.gamehorizon.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +8,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gamehorizon.R;
+
 public class jeuCommentaire extends AppCompatActivity implements View.OnClickListener {
 
     View header, footer;
-//teste
+
     TextView headerText;
 
     ImageView page_accueil, page_connexion, page_principal, page_ajoutJeu, page_jeu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chaque_jeu);
+        setContentView(R.layout.jeu);
 
         header = findViewById(R.id.header_chaque_jeu);
         footer = findViewById(R.id.footer_chaque_jeu);
@@ -27,11 +29,11 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
 
         headerText.setText(getString(R.string.Index));
 
-        page_accueil = header.findViewById(R.id.imageViewAccueil);
-        page_connexion = header.findViewById(R.id.imageViewConnexion);
-        page_principal = footer.findViewById(R.id.imageViewPagePrincipal);
-        page_ajoutJeu = footer.findViewById(R.id.imageViewAjoutJeu);
-        page_jeu = footer.findViewById(R.id.imageViewJeu);
+        page_accueil = header.findViewById(R.id.page_accueil_horizon);
+        page_connexion = header.findViewById(R.id.page_connexion);
+        page_principal = footer.findViewById(R.id.icone_accueil);
+        page_ajoutJeu = footer.findViewById(R.id.icone_page_ajoutJeux);
+        page_jeu = footer.findViewById(R.id.icone_page_recherche);
 
         page_accueil.setOnClickListener(this);
         page_connexion.setOnClickListener(this);

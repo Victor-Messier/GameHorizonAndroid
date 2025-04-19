@@ -1,4 +1,4 @@
-package com.example.gamehorizon;
+package com.example.gamehorizon.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.gamehorizon.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,11 +32,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         headerText.setText(getString(R.string.accueil));
 
-        page_accueil = header.findViewById(R.id.imageViewAccueil);
-        page_connexion = header.findViewById(R.id.imageViewConnexion);
-        page_principal = footer.findViewById(R.id.imageViewPagePrincipal);
-        page_ajoutJeu = footer.findViewById(R.id.imageViewAjoutJeu);
-        page_jeu = footer.findViewById(R.id.imageViewJeu);
+        page_accueil = header.findViewById(R.id.page_accueil_horizon);
+        page_connexion = header.findViewById(R.id.page_connexion);
+        page_principal = footer.findViewById(R.id.icone_accueil);
+        page_ajoutJeu = footer.findViewById(R.id.icone_page_ajoutJeux);
+        page_jeu = footer.findViewById(R.id.icone_page_recherche);
 
         connexion = findViewById(R.id.connexion);
         inscription = findViewById(R.id.inscription);
@@ -57,11 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         else if (v == page_connexion){
-            Intent intent = new Intent(MainActivity.this, connexion.class);
+            Intent intent = new Intent(MainActivity.this, com.example.gamehorizon.activity.connexion.class);
             startActivity(intent);
         }
         else if (v == page_principal){
-            Intent intent = new Intent(MainActivity.this, pagePrincipal.class);
+            Intent intent = new Intent(MainActivity.this, Recommandation.class);
             startActivity(intent);
         }
         else if (v == page_ajoutJeu){
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         else if (v == inscription){
-            Intent intent = new Intent(MainActivity.this, inscription.class);
+            Intent intent = new Intent(MainActivity.this, com.example.gamehorizon.activity.inscription.class);
             startActivity(intent);
         }
     }

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="409dp"
@@ -25,7 +25,7 @@
                 app:layout_constraintGuide_begin="16dp" />
 
             <ImageView
-                android:id="@+id/imageViewConnexion"
+                android:id="@+id/page_connexion"
                 android:layout_width="69dp"
                 android:layout_height="71dp"
                 android:contentDescription="@string/connexion"
@@ -54,13 +54,13 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageViewConnexion"
-                app:layout_constraintStart_toEndOf="@+id/imageViewAccueil"
+                app:layout_constraintEnd_toStartOf="@+id/page_connexion"
+                app:layout_constraintStart_toEndOf="@+id/page_accueil_horizon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints,TextSizeCheck" />
 
             <ImageView
-                android:id="@+id/imageViewAccueil"
+                android:id="@+id/page_accueil_horizon"
                 android:layout_width="62dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="8dp"
