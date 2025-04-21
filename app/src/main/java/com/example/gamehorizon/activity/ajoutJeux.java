@@ -246,6 +246,7 @@ public class ajoutJeux extends AppCompatActivity implements View.OnClickListener
                     Log.d(TAG, "Envoi des données JSON pour ajout: " + jeuData.toString());
 
                     requeteAPI.postJSONObject(urlAjout, jeuData, new RequeteAPI.RequeteJSONObjectCallback() {
+                        // Si la requete est accepter
                         @Override
                         public void onSuccess(JSONObject response) {
                             Log.d(TAG, "Réponse API ajout: " + response.toString());
@@ -269,7 +270,7 @@ public class ajoutJeux extends AppCompatActivity implements View.OnClickListener
                                 Toast.makeText(ajoutJeux.this, "Erreur de lecture de la réponse serveur", Toast.LENGTH_SHORT).show();
                             }
                         }
-
+                        // si la requête à une erreur
                         @Override
                         public void onError(VolleyError error) {
                             Log.e(TAG, "Erreur Volley lors de l'ajout: " + error.toString());
