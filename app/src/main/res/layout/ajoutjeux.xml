@@ -101,20 +101,18 @@
             android:entries="@array/plateformes_array"
             style="@style/SpinnerThemeBlancTexte"/>
 
-        <EditText
-            android:id="@+id/champ_genre"
+        <Spinner
+            android:id="@+id/champ_categorie"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:autofillHints=""
             android:ems="10"
-            android:hint="@string/genre"
+            android:hint="@string/plateform2"
             android:importantForAutofill="no"
-            android:inputType="text"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"/>
+            android:entries="@array/plateformes_array"
+            style="@style/SpinnerThemeBlancTexte"/>
 
         <EditText
             android:id="@+id/champ_image"

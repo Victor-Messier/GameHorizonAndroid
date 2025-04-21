@@ -1,4 +1,4 @@
-package com.example.gamehorizon;
+package com.example.gamehorizon.entite;
 
 import java.util.Date;
 

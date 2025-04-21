@@ -1,20 +1,20 @@
-package com.example.gamehorizon;
+package com.example.gamehorizon.entite;
 
-public class Plateform {
-
+public class Categorie {
     private int id;
     private String name;
 
-    public Plateform(int id, String name){
+    public Categorie(int id, String name){
         this.id = id;
         this.name = name;
     }
 
-    public Plateform(){}
+    public Categorie(){}
 
     public int getId() {
         return id;
     }
+
     public String getName() {
         return name;
     }

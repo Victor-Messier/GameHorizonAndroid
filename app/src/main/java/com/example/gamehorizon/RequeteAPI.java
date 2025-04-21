@@ -69,4 +69,36 @@ public class RequeteAPI {
 
         requestQueue.add(jsonObjectRequest);
     }
+
+    // Get pour plusieurs objets (liste) - utilisant aussi les classes anonymes
+    public void postJSONObject(String url, JSONObject data, RequeteJSONObjectCallback callback) {
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, // Méthode POST
+                url,
+                data, // Les données JSON à envoyer
+                // Utilisation de la classe anonyme interne pour Response.Listener
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccess(response); // Appel du callback de succès
+                    }
+                },
+                // Utilisation de la classe anonyme interne pour Response.ErrorListener
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        if (error.networkResponse != null) {
+                            try {
+                                String responseBody = new String(error.networkResponse.data, "utf-8");
+                            } catch (Exception e) {
+                            }
+                        }
+                        callback.onError(error); // Appel du callback d'erreur
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
+    }
 }

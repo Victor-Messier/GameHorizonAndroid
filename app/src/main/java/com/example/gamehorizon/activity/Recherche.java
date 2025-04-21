@@ -19,10 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
-import com.example.gamehorizon.Categorie;
-import com.example.gamehorizon.Jeu;
-import com.example.gamehorizon.JeuxAdapter;
-import com.example.gamehorizon.Plateform;
+import com.example.gamehorizon.entite.Categorie;
+import com.example.gamehorizon.entite.Jeu;
+import com.example.gamehorizon.Adapter.JeuxAdapter;
+import com.example.gamehorizon.entite.Plateform;
 import com.example.gamehorizon.R;
 import com.example.gamehorizon.RequeteAPI;
 import com.google.android.material.slider.Slider;
@@ -87,7 +87,7 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         textRechercheDate = findViewById(R.id.dateSortieRecherceTextView);
         sliderEtoile = findViewById(R.id.etoile_range_slider);
         spinnerPlateforme = findViewById(R.id.champ_plateforme);
-        spinnerCategorie = findViewById(R.id.champ_genre);
+        spinnerCategorie = findViewById(R.id.champ_categorie);
 
         page_accueil.setOnClickListener(this);
         page_connexion.setOnClickListener(this);

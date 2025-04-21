@@ -160,7 +160,7 @@
                     android:textSize="16sp" />
 
                 <Spinner
-                    android:id="@+id/champ_genre"
+                    android:id="@+id/champ_categorie"
                     style="@style/SpinnerThemeBlancTexte"
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
