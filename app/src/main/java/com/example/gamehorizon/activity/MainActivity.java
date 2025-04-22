@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -63,16 +64,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         else if (v == page_principal){
-            Intent intent = new Intent(MainActivity.this, Recommandation.class);
-            startActivity(intent);
+            Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
         }
         else if (v == page_ajoutJeu){
-            Intent intent = new Intent(MainActivity.this, ajoutJeux.class);
-            startActivity(intent);
+            Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
+
         }
         else if (v == page_jeu){
-            Intent intent = new Intent(MainActivity.this, Recherche.class);
-            startActivity(intent);
+            Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
         }
         else if (v == connexion){
             Intent intent = new Intent(MainActivity.this, connexion.class);

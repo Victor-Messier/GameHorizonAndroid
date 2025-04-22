@@ -1,13 +1,14 @@
 package com.example.gamehorizon;
 
 import android.content.Context;
-
+import android.util.Log; // Ajout de l'import manquant
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest; // Ajout de l'import manquant
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -19,8 +20,8 @@ public class RequeteAPI {
     private Context context;
 
     public RequeteAPI(Context context){
-        this.context = context;
-        requestQueue = Volley.newRequestQueue(context);
+        this.context = context.getApplicationContext(); // Utilisation de getApplicationContext
+        requestQueue = Volley.newRequestQueue(this.context);
     }
 
     public interface RequeteJSONArrayCallback {
@@ -32,7 +33,13 @@ public class RequeteAPI {
         void onError(VolleyError error);
     }
 
-    //Get pour plusieurs objet(liste)
+    // Ajout de l'interface manquante
+    public interface RequeteStringCallback {
+        void onSuccess(String response);
+        void onError(VolleyError error);
+    }
+
+
     public void getJSONArray(String url, RequeteJSONArrayCallback callback) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -51,54 +58,82 @@ public class RequeteAPI {
         requestQueue.add(jsonArrayRequest);
     }
 
-    //Get pour juste un objet
+
     public void getJSONObject(String url, RequeteJSONObjectCallback callback) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess(response); // Appel du callback de succès
+                        callback.onSuccess(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onError(error); // Appel du callback d'erreur
+                        callback.onError(error);
                     }
                 });
 
         requestQueue.add(jsonObjectRequest);
     }
 
-    // Get pour plusieurs objets (liste) - utilisant aussi les classes anonymes
+
     public void postJSONObject(String url, JSONObject data, RequeteJSONObjectCallback callback) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST, // Méthode POST
+                Request.Method.POST,
                 url,
-                data, // Les données JSON à envoyer
-                // Utilisation de la classe anonyme interne pour Response.Listener
+                data,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess(response); // Appel du callback de succès
+                        callback.onSuccess(response);
                     }
                 },
-                // Utilisation de la classe anonyme interne pour Response.ErrorListener
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         if (error.networkResponse != null) {
                             try {
                                 String responseBody = new String(error.networkResponse.data, "utf-8");
+                                Log.e("RequeteAPI_ErrorBody", "postJSONObject Status: " + error.networkResponse.statusCode + " Body: " + responseBody);
                             } catch (Exception e) {
+                                Log.e("RequeteAPI_ErrorBody", "postJSONObject Erreur lecture corps erreur Volley", e);
                             }
                         }
-                        callback.onError(error); // Appel du callback d'erreur
+                        callback.onError(error);
                     }
                 }
         );
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void getString(String url, RequeteStringCallback callback) {
+        Log.d("RequeteAPI", "getString Request URL: " + url);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("RequeteAPI", "getString Success. Response: '" + response + "'");
+                        callback.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("RequeteAPI", "getString Error for URL " + url + ": " + error.toString());
+                        if (error.networkResponse != null) {
+                            try {
+                                String responseBody = new String(error.networkResponse.data, "utf-8");
+                                Log.e("RequeteAPI_ErrorBody", "getString Status: " + error.networkResponse.statusCode + " Body: " + responseBody);
+                            } catch (Exception e) {
+                                Log.e("RequeteAPI_ErrorBody", "getString Erreur lecture corps erreur Volley", e);
+                            }
+                        }
+                        callback.onError(error);
+                    }
+                });
+
+        requestQueue.add(stringRequest);
     }
 }

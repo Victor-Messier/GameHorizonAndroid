@@ -44,6 +44,8 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
     Slider sliderEtoile;
     Spinner spinnerPlateforme, spinnerCategorie;
     ImageView page_accueil, page_connexion, page_principal, page_ajoutJeu, page_jeu, imageJeu;
+    private int idUtilisateur;
+    private String nomUtilisateur;
     private static final String TAG = "Recherche";
 
     private String rechercheJeu = "";
@@ -112,14 +114,20 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         }
         else if (v == page_principal){
             Intent intent = new Intent(Recherche.this, Recommandation.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
         else if (v == page_ajoutJeu){
             Intent intent = new Intent(Recherche.this, ajoutJeux.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
         else if (v == page_jeu){
             Intent intent = new Intent(Recherche.this, Recherche.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
     }

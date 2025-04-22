@@ -43,6 +43,10 @@ public class ajoutJeux extends AppCompatActivity implements View.OnClickListener
     List<Plateform> listPlatform = new ArrayList<>();
     List<Categorie> listCategorie = new ArrayList<>();
 
+    private int idUtilisateur;
+    private String nomUtilisateur;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,10 @@ public class ajoutJeux extends AppCompatActivity implements View.OnClickListener
         boutonAjouterJeux = findViewById(R.id.bouton_ajouter_jeux);
 
         boutonAjouterJeux.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        idUtilisateur = intent.getIntExtra("ID_UTILISATEUR", 1);
+        nomUtilisateur = intent.getStringExtra("NAME_UTILISATEUR");
 
         // Remplissage des deux spinners
         remplirSpinnerPlateforme();
@@ -192,17 +200,22 @@ public class ajoutJeux extends AppCompatActivity implements View.OnClickListener
         // Navigation vers les autres page
         if (v.getId() == R.id.page_accueil_horizon) {
             Intent intent = new Intent(ajoutJeux.this, MainActivity.class);
+
             startActivity(intent);
         } else if (v.getId() == R.id.page_connexion) {
             Intent intent = new Intent(ajoutJeux.this, connexion.class);
             startActivity(intent);
         } else if (v.getId() == R.id.icone_accueil) {
             Intent intent = new Intent(ajoutJeux.this, Recommandation.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         } else if (v.getId() == R.id.icone_page_ajoutJeux) {
             // Déjà sur la page
         } else if (v.getId() == R.id.icone_page_recherche) {
             Intent intent = new Intent(ajoutJeux.this, Recherche.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
         else if (v.getId() == R.id.bouton_ajouter_jeux) {

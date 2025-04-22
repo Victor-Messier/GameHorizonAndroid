@@ -71,9 +71,9 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
         imageJeu = gamesRV.findViewById(R.id.gameImageView); // Pas nécessaire ici
         requeteAPI = new RequeteAPI(this);
 
-        //Intent intentionRecommandation = getIntent();
-        //idUtilisateur = intentionRecommandation.getIntExtra("ID_UTILISATEUR", 1);
-        //nomUtilisateur = intentionRecommandation.getStringExtra("NAME_UTILISATEUR");
+        Intent intentionRecommandation = getIntent();
+        idUtilisateur = intentionRecommandation.getIntExtra("ID_UTILISATEUR", 1);
+        nomUtilisateur = intentionRecommandation.getStringExtra("NAME_UTILISATEUR");
 
         recommandationsJeux();
     }
@@ -91,14 +91,20 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
         }
         else if (v == page_principal){
             Intent intent = new Intent(Recommandation.this, Recommandation.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
         else if (v == page_ajoutJeu){
             Intent intent = new Intent(Recommandation.this, ajoutJeux.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
         else if (v == page_jeu){
             Intent intent = new Intent(Recommandation.this, com.example.gamehorizon.activity.Recherche.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
     }

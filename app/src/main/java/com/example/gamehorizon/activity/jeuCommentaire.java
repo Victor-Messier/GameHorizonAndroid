@@ -18,6 +18,8 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
     TextView headerText;
     private static final String TAG = "jeuCommentaire";
     private int idJeu;
+    private int idUtilisateur;
+    private String nomUtilisateur;
 
     ImageView page_accueil, page_connexion, page_principal, page_ajoutJeu, page_jeu;
     @Override
@@ -46,6 +48,8 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
 
         Intent intent = getIntent();
         idJeu = intent.getIntExtra("ID_JEU",1);
+        idUtilisateur = intent.getIntExtra("ID_UTILISATEUR", 1);
+        nomUtilisateur = intent.getStringExtra("NAME_UTILISATEUR");
         Log.d(TAG,"L'id du jeu choisi est: " + idJeu);
 
     }
@@ -62,14 +66,20 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
         }
         else if (v == page_principal){
             Intent intent = new Intent(jeuCommentaire.this, jeuCommentaire.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
         else if (v == page_ajoutJeu){
             Intent intent = new Intent(jeuCommentaire.this, ajoutJeux.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
         else if (v == page_jeu){
             Intent intent = new Intent(jeuCommentaire.this, Recherche.class);
+            intent.putExtra("ID_UTILISATEUR", idUtilisateur);
+            intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
         }
     }
