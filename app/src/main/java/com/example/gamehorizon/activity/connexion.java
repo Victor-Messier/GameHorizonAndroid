@@ -99,8 +99,6 @@ public class connexion extends AppCompatActivity implements View.OnClickListener
             Toast.makeText(this, "Déjà sur la page de connexion", Toast.LENGTH_SHORT).show();
         } else if (viewId == R.id.icone_accueil) {
             Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(connexion.this, Recherche.class);
-            startActivity(intent);
         } else if (viewId == R.id.icone_page_ajoutJeux) {
             Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
         } else if (viewId == R.id.icone_page_recherche) {
