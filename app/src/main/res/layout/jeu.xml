@@ -10,8 +10,8 @@
         android:layout_height="match_parent"
         android:autofillHints=""
         android:background="@drawable/background"
-        tools:layout_editor_absoluteX="-82dp"
-        tools:layout_editor_absoluteY="-48dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-65dp">
 
         <include
             android:id="@+id/header_jeu"
@@ -27,7 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="500dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,13 +67,14 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="195dp"
-                android:layout_height="219dp"
+                android:layout_height="480dp"
                 android:layout_marginEnd="4dp"
+                android:layout_marginTop="200dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/imageJeu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageJeu"
-                app:layout_constraintTop_toBottomOf="@+id/titreJeu"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="VisualLintBounds,TextSizeCheck">
 
                 <TextView
@@ -85,11 +86,12 @@
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
+
+
                 <TextView
                     android:id="@+id/description2"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="@string/d"
+                    android:layout_height="160dp"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -104,7 +106,6 @@
                     android:id="@+id/date_sortie2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/s"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -118,8 +119,35 @@
                 <TextView
                     android:id="@+id/studio2"
                     android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/platform"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/ss"
+                    android:text="@string/platform"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/nomPlateforme"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/noteJeu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/noteJeu"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/noteJeuValeur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -139,19 +167,22 @@
             app:layout_constraintGuide_begin="89dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerViewCom"
             android:layout_width="407dp"
-            android:layout_height="204dp"
-            android:layout_marginTop="60dp"
+            android:layout_height="0dp"
+            android:paddingBottom="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/ecrire_commentaire"
+            app:layout_constraintVertical_bias="1.0"
             tools:listitem="@layout/commentaire" />
 
         <Button
             android:id="@+id/bouton_ajouter_jeux"
             android:layout_width="121dp"
-            android:layout_height="63dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="1dp"
             android:backgroundTint="@color/black"
@@ -170,11 +201,11 @@
         <EditText
             android:id="@+id/ecrire_commentaire"
             android:layout_width="293dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="3dp"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/ecrire_un_commentaire"
             android:inputType="text"
+            android:minHeight="48dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/commentaires_recycler_view"

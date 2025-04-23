@@ -76,13 +76,16 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         page_ajoutJeu = footer.findViewById(R.id.icone_page_ajoutJeux);
         page_jeu = footer.findViewById(R.id.icone_page_recherche);
 
-        items = findViewById(R.id.recyclerView);
-        textNom = items.findViewById(R.id.gameNameTextView); // Pas nécessaire ici
+        Intent intent = getIntent();
+        idUtilisateur = intent.getIntExtra("ID_UTILISATEUR", 1);
+        nomUtilisateur = intent.getStringExtra("NAME_UTILISATEUR");
+        Log.d(TAG,"L'id du user choisi est: " + idUtilisateur);
 
+        items = findViewById(R.id.recyclerViewjeux);
         items.setLayoutManager(new LinearLayoutManager(this));
         jeuxAdapter = new JeuxAdapter(listeJeux, this); // 2. Passez 'this' comme listener à l'adaptateur
         items.setAdapter(jeuxAdapter);
-        imageJeu = items.findViewById(R.id.gameImageView); // Pas nécessaire ici
+
         requeteAPI = new RequeteAPI(this);
 
         textRechercheJeu = findViewById(R.id.rechercheJeuTextView);
@@ -137,6 +140,8 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
     public void onItemClick(Jeu jeu) {
         Intent jeuInfo = new Intent(Recherche.this, jeuCommentaire.class);
         jeuInfo.putExtra("ID_JEU", jeu.getId());
+        jeuInfo.putExtra("ID_UTILISATEUR", idUtilisateur);
+        jeuInfo.putExtra("NAME_UTILISATEUR", nomUtilisateur);
         startActivity(jeuInfo);
     }
 
@@ -302,7 +307,9 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         if (!dateSortie.isEmpty()) {
             urlBuilder.append("date=").append(dateSortie).append("&");
         }
-        urlBuilder.append("note=").append(noteSpiner).append("&");;
+        if (noteSpiner !=0){
+            urlBuilder.append("note=").append(noteSpiner).append("&");
+        }
 
         if (plateformeSelectionnee != null) {
             if(plateformeSelectionnee.getId() != 0) {
@@ -316,7 +323,6 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         }
 
         urlBuilder.append("limite=50").append("&");
-        urlBuilder.append("page=1").append("&");
 
         // Supprimer le dernier "&" si il y en a un
         if (urlBuilder.charAt(urlBuilder.length() - 1) == '&') {

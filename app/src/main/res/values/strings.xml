@@ -34,7 +34,10 @@
     <string name="description">Description</string>
     <string name="image_du_jeux">TODO</string>
     <string name="ss">s</string>
-    <string name="studio">Studio</string>
+    <string name="studio">Genre</string>
+    <string name="platform">Plateforme</string>
+    <string name="noteJeu">Nombre d"étoile sur 5</string>
+    <string name="nomPlateforme">nomPlat</string>
     <string name="nom_jeux">Nom Jeux</string>
     <string name="commentaire_commentaire_commentaire_commentaire_commentaire_commentaire_commentaire_commentaire">Commentaire Commentaire Commentaire Commentaire Commentaire Commentaire Commentaire Commentaire</string>
     <string name="nom_utilisateur">Username</string>
@@ -65,6 +68,7 @@
     <string name="ajouter_un_jeu">Ajouter un jeu</string>
     <string name="ajouter">Ajouter</string>
     <string name="recommandation">Recommandation</string>
+    <string name="supprimer">Supprimer</string>
 
     <string-array name="plateformes_array">
         <item>Sélectionner une plateforme</item>

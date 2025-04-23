@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:gravity="center"
+    android:layout_gravity="center_horizontal"
     android:padding="8dp">
 
     <TextView
@@ -13,6 +13,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/nom_du_jeu"
         android:textColor="#0277BD"
+        android:layout_gravity="center_horizontal"
         android:textSize="16sp" />
 
     <ImageView
@@ -21,6 +22,7 @@
         android:layout_height="120dp"
         android:contentDescription="@string/todo4"
         android:src="@drawable/horizon"
+        android:layout_gravity="center_horizontal"
         android:scaleType="centerCrop" />
 
 </LinearLayout>
