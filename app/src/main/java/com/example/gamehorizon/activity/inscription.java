@@ -89,14 +89,11 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
             Intent intent = new Intent(inscription.this, connexion.class);
             startActivity(intent);
         } else if (viewId == R.id.icone_accueil) {
-            Intent intent = new Intent(inscription.this, Recommandation.class);
-            startActivity(intent);
+            Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
         } else if (viewId == R.id.icone_page_ajoutJeux) {
-            Intent intent = new Intent(inscription.this, ajoutJeux.class);
-            startActivity(intent);
+            Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
         } else if (viewId == R.id.icone_page_recherche) {
-            Intent intent = new Intent(inscription.this, Recherche.class);
-            startActivity(intent);
+            Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
         }
         // --- Logique d'Inscription ---
         else if (viewId == R.id.bouton_inscription) {
