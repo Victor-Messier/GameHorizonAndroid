@@ -81,7 +81,7 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
 
         int viewId = v.getId();
 
-        // --- Navigation ---
+        // Navigation entre pages
         if (viewId == R.id.page_accueil_horizon) {
             Intent intent = new Intent(inscription.this, MainActivity.class);
             startActivity(intent);
@@ -95,7 +95,7 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
         } else if (viewId == R.id.icone_page_recherche) {
             Toast.makeText(this, "Il faut être connecter pour aller sur les autre pages", Toast.LENGTH_SHORT).show();
         }
-        // --- Logique d'Inscription ---
+        // Logique pour s'incrire en tant qu'utilisateur
         else if (viewId == R.id.bouton_inscription) {
 
             // Récupérer les valeurs
@@ -106,40 +106,37 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
             String mdp = champ_MDP.getText().toString().trim();
             String confMdp = champ_conf_MDP.getText().toString().trim();
 
-            // 1. Vérifier si les champs sont vides
+
             if (username.isEmpty() || prenom.isEmpty() || adresseCourriel.isEmpty() ||
                     nom.isEmpty() || mdp.isEmpty() || confMdp.isEmpty()) {
                 Toast.makeText(inscription.this, "Veuillez remplir tous les champs.", Toast.LENGTH_LONG).show();
-                return; // Arrêter si un champ est vide
+                return;
             }
 
-            // 2. Vérifier si les mots de passe correspondent
+            // Vérification des connexion
             if (!mdp.equals(confMdp)) {
                 Toast.makeText(inscription.this, "Les mots de passe ne correspondent pas.", Toast.LENGTH_LONG).show();
-                // Optionnel: Mettre en évidence les champs MDP
+
                 champ_MDP.setError("Les mots de passe doivent correspondre");
                 champ_conf_MDP.setError("Les mots de passe doivent correspondre");
-                champ_MDP.requestFocus(); // Mettre le focus sur le premier champ MDP
-                return; // Arrêter si les MDP diffèrent
+                champ_MDP.requestFocus();
+                return;
             } else {
-                // Optionnel: Effacer l'erreur si elle avait été mise avant
+
                 champ_MDP.setError(null);
                 champ_conf_MDP.setError(null);
             }
 
-            // *** 3. Vérifier le format de l'adresse e-mail ***
+            // Vérification de l'adresse courriel
             if (!Patterns.EMAIL_ADDRESS.matcher(adresseCourriel).matches()) {
                 Toast.makeText(inscription.this, "Veuillez entrer une adresse courriel valide.", Toast.LENGTH_LONG).show();
-                // Mettre en évidence le champ email
+
                 champ_Adresse_courriel.setError("Adresse courriel invalide");
                 champ_Adresse_courriel.requestFocus();
-                return; // Arrêter si l'email n'est pas valide
+                return;
             } else {
-                // Optionnel: Effacer l'erreur si elle avait été mise avant
                 champ_Adresse_courriel.setError(null);
             }
-
-            // --- Si toutes les validations passent, continuer vers l'API ---
 
             JSONObject utilisateurData = new JSONObject();
             try {
@@ -173,10 +170,6 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
                                 champ_MDP.setText("");
                                 champ_conf_MDP.setText("");
 
-                                // Optionnel : Rediriger vers la connexion après inscription réussie
-                                // Intent intent = new Intent(inscription.this, connexion.class);
-                                // startActivity(intent);
-                                // finish(); // Fermer cette activité
 
                             } else {
                                 String errorMsg = response.optString("error", "Erreur lors de l'inscription (API).");
@@ -189,9 +182,10 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
                         }
                     }
 
+                    // Si il y a erreur dans la reqête
                     @Override
                     public void onError(VolleyError error) {
-                        // Le bloc onError robuste est correct ici
+
                         Log.e(TAG, "Erreur Volley lors de l'inscription: " + error.toString());
                         String errorMsg = "Erreur réseau ou serveur.";
                         String responseBody = "";
@@ -225,16 +219,16 @@ public class inscription extends AppCompatActivity implements View.OnClickListen
                 Log.e(TAG, "Erreur création JSON pour inscription", e);
                 Toast.makeText(inscription.this, "Erreur interne lors de la préparation des données", Toast.LENGTH_SHORT).show();
             }
-        } // Fin du else if (viewId == R.id.bouton_inscription)
-    } // Fin de la méthode onClick
+        }
+    }
 
-    // Ajouter onDestroy pour annuler les requêtes (recommandé)
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (requeteAPI != null) {
             Log.d(TAG, "Tentative d'annulation des requêtes pour InscriptionActivity");
-            // Idéalement, appeler une méthode comme requeteAPI.cancelAllRequests(TAG);
+
         }
     }
-} // Fin de la classe inscription
+}

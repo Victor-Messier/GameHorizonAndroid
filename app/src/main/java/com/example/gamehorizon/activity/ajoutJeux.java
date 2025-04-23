@@ -46,7 +46,6 @@ public class ajoutJeux extends AppCompatActivity implements View.OnClickListener
     private int idUtilisateur;
     private String nomUtilisateur;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,21 +223,22 @@ public class ajoutJeux extends AppCompatActivity implements View.OnClickListener
             String dateParution = champDateParution.getText().toString().trim();
             String image = champImage.getText().toString().trim();
 
-            String plateformeSelectionnee = "";
-            String categorieSelectionnee = "";
+            int plateformeSelectionnee = 0;
+            int categorieSelectionnee = 0;
 
             Object selectedPlateformeItem = spinnerPlatform.getSelectedItem();
             if (spinnerPlatform.getSelectedItemPosition() > 0 && selectedPlateformeItem instanceof Plateform) {
                 Plateform selectedPlateform = (Plateform) selectedPlateformeItem;
-                plateformeSelectionnee = selectedPlateform.getName();
+                plateformeSelectionnee = selectedPlateform.getId();
             }
 
             Object selectedCategorieItem = spinnerCategorie.getSelectedItem();
             if (spinnerCategorie.getSelectedItemPosition() > 0 && selectedCategorieItem instanceof Categorie) {
                 Categorie selectedCategorie = (Categorie) selectedCategorieItem;
-                categorieSelectionnee = selectedCategorie.getName();
+                categorieSelectionnee = selectedCategorie.getId();
             }
 
+            // Si un des champs est vides demande de remplir les champs
             if (!nomJeu.isEmpty() &&
                     !description.isEmpty() &&
                     !dateParution.isEmpty() &&
