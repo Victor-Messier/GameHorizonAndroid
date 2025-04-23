@@ -214,7 +214,6 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onError(VolleyError error) {
-                // --- GESTION SPÉCIFIQUE DU 404 ---
                 if (error.networkResponse != null && error.networkResponse.statusCode == 404) {
                     // Erreur 404: Considéré comme "Aucun commentaire trouvé" - Pas une vraie erreur pour l'utilisateur
                     Log.d(TAG, "Erreur 404 reçue pour les commentaires - Traité comme liste vide.");
