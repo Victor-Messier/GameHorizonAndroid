@@ -113,6 +113,8 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
     public void onItemClick(Jeu jeu) {
         Intent jeuInfo = new Intent(Recommandation.this, jeuCommentaire.class);
         jeuInfo.putExtra("ID_JEU", jeu.getId());
+        jeuInfo.putExtra("ID_UTILISATEUR", idUtilisateur);
+        jeuInfo.putExtra("NAME_UTILISATEUR", nomUtilisateur);
         startActivity(jeuInfo);
     }
 
