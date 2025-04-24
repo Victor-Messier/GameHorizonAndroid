@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.example.gamehorizon.entite.Categorie;
 import com.example.gamehorizon.entite.Plateform;
 import com.example.gamehorizon.R;
-import com.example.gamehorizon.RequeteAPI; // Assurez-vous que cette classe est la version Singleton
+import com.example.gamehorizon.RequeteAPI;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +29,6 @@ import java.util.List;
 
 public class ajoutJeux extends AppCompatActivity implements View.OnClickListener {
 
-    // TAG pour les logs, utile pour identifier d'où viennent les messages
     private static final String TAG = "AjoutJeuxActivity";
 
     View header, footer;

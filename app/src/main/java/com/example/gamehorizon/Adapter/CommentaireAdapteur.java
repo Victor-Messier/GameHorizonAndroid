@@ -23,7 +23,6 @@ public class CommentaireAdapteur extends RecyclerView.Adapter<CommentaireAdapteu
         void onDeleteClick(int position);
     }
 
-    // Modifiez le constructeur ou ajoutez un setter pour le listener
     public CommentaireAdapteur(List<Commentaire> commentaireList, int loggedInUserId, OnCommentaireActionListener listener) {
         this.commentaireList = commentaireList;
         this.loggedInUserId = loggedInUserId;

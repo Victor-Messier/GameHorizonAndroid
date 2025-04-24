@@ -180,7 +180,7 @@
             tools:listitem="@layout/commentaire" />
 
         <Button
-            android:id="@+id/bouton_ajouter_jeux"
+            android:id="@+id/bouton_ajouter_com"
             android:layout_width="121dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

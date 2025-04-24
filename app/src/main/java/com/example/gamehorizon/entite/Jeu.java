@@ -16,7 +16,7 @@ public class Jeu {
         if (image != null && image.startsWith("//")) {
             this.image = "https:" + image;
         } else {
-            this.image = image; // Otherwise, use the URL as is
+            this.image = image;
         }
         this.release_date = date;
         this.moyenne_note = moyenne_note;
@@ -29,7 +29,7 @@ public class Jeu {
         if (image != null && image.startsWith("//")) {
             this.image = "https:" + image;
         } else {
-            this.image = image; // Otherwise, use the URL as is
+            this.image = image;
         }
         this.release_date = null;
         this.moyenne_note = 0;

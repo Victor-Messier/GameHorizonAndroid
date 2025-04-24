@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gamehorizon.R;
 
+//Acceuil
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     View header, footer;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    //Click sur les icones en haut et en bas dans le footer et le header
     @Override
     public void onClick(View v) {
         if (v == page_accueil){

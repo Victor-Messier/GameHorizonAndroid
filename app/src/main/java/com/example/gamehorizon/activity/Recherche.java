@@ -2,6 +2,8 @@ package com.example.gamehorizon.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -34,7 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recherche extends AppCompatActivity implements View.OnClickListener, JeuxAdapter.OnItemClickListener { // 1. Implémentez JeuxAdapter.OnItemClickListener
+public class Recherche extends AppCompatActivity implements View.OnClickListener, JeuxAdapter.OnItemClickListener {
 
     RecyclerView items;
     View header, footer;
@@ -54,10 +56,16 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
     private Plateform plateformeSelectionnee = null;
     private Categorie categorieSelectionnee = null;
 
-    private JeuxAdapter jeuxAdapter; // Adapter pour le RecyclerView
-    private List<Jeu> listeJeux = new ArrayList<>(); // Liste de jeux pour le RecyclerView
+    private JeuxAdapter jeuxAdapter;
+    private List<Jeu> listeJeux = new ArrayList<>();
     private List<Plateform> listPlatform = new ArrayList<Plateform>();
     private List<Categorie> listCategorie = new ArrayList<Categorie>();
+
+    private Handler searchHandler = new Handler(Looper.getMainLooper());
+    private Runnable searchRunnable;
+    private final long SEARCH_DELAY = 500;
+    private boolean initialPlatformSelectionDone = false;
+    private boolean initialCategorySelectionDone = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +84,7 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         page_ajoutJeu = footer.findViewById(R.id.icone_page_ajoutJeux);
         page_jeu = footer.findViewById(R.id.icone_page_recherche);
 
+        //Récup les infos du intent
         Intent intent = getIntent();
         idUtilisateur = intent.getIntExtra("ID_UTILISATEUR", 1);
         nomUtilisateur = intent.getStringExtra("NAME_UTILISATEUR");
@@ -83,7 +92,7 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
 
         items = findViewById(R.id.recyclerViewjeux);
         items.setLayoutManager(new LinearLayoutManager(this));
-        jeuxAdapter = new JeuxAdapter(listeJeux, this); // 2. Passez 'this' comme listener à l'adaptateur
+        jeuxAdapter = new JeuxAdapter(listeJeux, this);
         items.setAdapter(jeuxAdapter);
 
         requeteAPI = new RequeteAPI(this);
@@ -105,6 +114,7 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         rechercherJeux();
     }
 
+    //Gère les clicks sur les boutons du footer et du header
     @Override
     public void onClick(View v) {
         if (v == page_accueil){
@@ -135,7 +145,7 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    // 3. Implémentez la méthode onItemClick de l'interface JeuxAdapter.OnItemClickListener
+    //Quand on click sur un jeu de la liste
     @Override
     public void onItemClick(Jeu jeu) {
         Intent jeuInfo = new Intent(Recherche.this, jeuCommentaire.class);
@@ -145,6 +155,7 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         startActivity(jeuInfo);
     }
 
+    //Remplir les spinner de platforme et de genre
     public void remplirSpinner() {
         String urlRecupPlatform = "https://equipe100.tch099.ovh/api/platform";
         requeteAPI.getJSONArray(urlRecupPlatform, new RequeteAPI.RequeteJSONArrayCallback() {
@@ -163,7 +174,6 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
                     ArrayAdapter<Plateform> spinnerAdapterPlatform = new ArrayAdapter<>(
                             Recherche.this, android.R.layout.simple_spinner_dropdown_item, listPlatform);
 
-                    // Définir l'adaptateur sur le Spinner
                     spinnerPlateforme.setAdapter(spinnerAdapterPlatform);
 
                 } catch (JSONException e) {
@@ -196,7 +206,6 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
                     ArrayAdapter<Categorie> spinnerAdapterCategorie = new ArrayAdapter<>(
                             Recherche.this, android.R.layout.simple_spinner_dropdown_item, listCategorie);
 
-                    // Définir l'adaptateur sur le Spinner
                     spinnerCategorie.setAdapter(spinnerAdapterCategorie);
 
                 } catch (JSONException e) {
@@ -213,90 +222,153 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         });
     }
 
+    //Listeners pour tous les critères de recherche
     private void setupListeners() {
-        // Listener pour le champ de recherche de jeu
+        //Listener pour le champ de recherche de jeu
         textRechercheJeu.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                rechercheJeu = charSequence.toString();
-                rechercherJeux(); // Déclencher la recherche à chaque changement de texte
+                if (searchRunnable != null) {
+                    searchHandler.removeCallbacks(searchRunnable);
+                }
             }
 
             @Override
-            public void afterTextChanged(Editable editable) { }
+            public void afterTextChanged(Editable editable) {
+                rechercheJeu = editable.toString();
+                searchRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "Debounced search triggered for: " + rechercheJeu);
+                        rechercherJeux();
+                    }
+                };
+                searchHandler.postDelayed(searchRunnable, SEARCH_DELAY);
+            }
         });
 
-        // Listener pour le champ de date de sortie
+        //Listener pour le champ de date de sortie
         textRechercheDate.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                dateSortie = charSequence.toString();
-                if (dateSortie.length() == 4) {
-                    rechercherJeux();
+                if (searchRunnable != null) {
+                    searchHandler.removeCallbacks(searchRunnable);
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable editable) { }
-        });
-
-        // Listener pour le RangeSlider
-        sliderEtoile.addOnChangeListener(new Slider.OnChangeListener() {
-            @Override
-            public void onValueChange(Slider slider, float value, boolean fromUser) {
-                noteSpiner = value;
-
-                rechercherJeux(); // Déclencher la recherche à chaque changement du slider
+            public void afterTextChanged(Editable editable) {
+                dateSortie = editable.toString();
+                if (dateSortie.isEmpty() || dateSortie.length() >= 4) {
+                    final String currentDateQuery = dateSortie;
+                    Runnable dateSearchRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            if (dateSortie.equals(currentDateQuery)) {
+                                Log.d(TAG, "Debounced date search triggered for: " + dateSortie);
+                                rechercherJeux();
+                            }
+                        }
+                    };
+                    searchHandler.postDelayed(dateSearchRunnable, SEARCH_DELAY);
+                }
             }
         });
 
-        // Listener pour le Spinner Plateforme
+        //Listener pour le RangeSlider
+        sliderEtoile.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
+            @Override
+            public void onStartTrackingTouch(Slider slider) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(Slider slider) {
+                noteSpiner = slider.getValue();
+                Log.d(TAG, "Slider onStopTrackingTouch - Nouvelle note: " + noteSpiner + ", déclenchement recherche.");
+                rechercherJeux();
+            }
+        });
+
+        //Listener pour le Spinner Plateforme
         spinnerPlateforme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Récupérer l'objet Plateform directement de la liste en utilisant la position
-                if (position >= 0 && position < listPlatform.size()) {
-                    plateformeSelectionnee = listPlatform.get(position);
-                } else {
-                    plateformeSelectionnee = null; // Gérer le cas où la position est invalide (optionnel)
+                if (listPlatform.size() > position) {
+                    Plateform selected = listPlatform.get(position);
+                    boolean selectionChanged = (plateformeSelectionnee == null || plateformeSelectionnee.getId() != selected.getId());
+
+                    if (selectionChanged) {
+                        plateformeSelectionnee = selected;
+                        if (initialPlatformSelectionDone) {
+                            Log.d(TAG, "SpinnerPlatform - Selection changed by user/later event, triggering search.");
+                            rechercherJeux();
+                        } else {
+                            Log.d(TAG, "SpinnerPlatform - Initial selection, ignoring search trigger.");
+                            initialPlatformSelectionDone = true;
+                        }
+                    } else if (!initialPlatformSelectionDone) {
+                        initialPlatformSelectionDone = true;
+                    }
                 }
-                rechercherJeux();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                plateformeSelectionnee = null;
-                rechercherJeux();
+                if (initialPlatformSelectionDone && plateformeSelectionnee != null) {
+                    Log.d(TAG, "SpinnerPlatform - Nothing selected, triggering search.");
+                    plateformeSelectionnee = null;
+                    rechercherJeux();
+                } else {
+                    plateformeSelectionnee = null;
+                    if (!initialPlatformSelectionDone) initialPlatformSelectionDone = true;
+                }
             }
         });
 
-        // Listener pour le Spinner Catégorie
+        //Listener pour le Spinner Catégorie
         spinnerCategorie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Récupérer l'objet Categorie directement de la liste en utilisant la position
-                if (position >= 0 && position < listCategorie.size()) {
-                    categorieSelectionnee = listCategorie.get(position);
-                } else {
-                    categorieSelectionnee = null; // Gérer le cas où la position est invalide (optionnel)
+                if (listCategorie.size() > position) {
+                    Categorie selected = listCategorie.get(position);
+                    boolean selectionChanged = (categorieSelectionnee == null || categorieSelectionnee.getId() != selected.getId());
+
+                    if (selectionChanged) {
+                        categorieSelectionnee = selected;
+                        if (initialCategorySelectionDone) {
+                            Log.d(TAG, "SpinnerCategorie - Selection changed by user/later event, triggering search.");
+                            rechercherJeux();
+                        } else {
+                            Log.d(TAG, "SpinnerCategorie - Initial selection, ignoring search trigger.");
+                            initialCategorySelectionDone = true;
+                        }
+                    } else if (!initialCategorySelectionDone) {
+                        initialCategorySelectionDone = true;
+                    }
                 }
-                rechercherJeux();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                categorieSelectionnee = null;
-                rechercherJeux();
+                if (initialCategorySelectionDone && categorieSelectionnee != null) {
+                    Log.d(TAG, "SpinnerCategorie - Nothing selected, triggering search.");
+                    categorieSelectionnee = null;
+                    rechercherJeux();
+                } else {
+                    categorieSelectionnee = null;
+                    if (!initialCategorySelectionDone) initialCategorySelectionDone = true;
+                }
             }
         });
     }
 
+    //Construire la grosse requête pour la recherhce de jeux
     private String buildApiUrl() {
         String baseUrl = "https://equipe100.tch099.ovh/api/jeux/get/multiParams?";
         StringBuilder urlBuilder = new StringBuilder(baseUrl);
@@ -324,7 +396,7 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
 
         urlBuilder.append("limite=50").append("&");
 
-        // Supprimer le dernier "&" si il y en a un
+        //Supprimer le dernier "&" si il y en a un
         if (urlBuilder.charAt(urlBuilder.length() - 1) == '&') {
             urlBuilder.deleteCharAt(urlBuilder.length() - 1);
         }
@@ -332,38 +404,44 @@ public class Recherche extends AppCompatActivity implements View.OnClickListener
         return urlBuilder.toString();
     }
 
+    //Requête à l'API pour la recherche
     private void rechercherJeux() {
         String apiUrl = buildApiUrl();
         Log.d(TAG, "URL de recherche: " + apiUrl);
 
+        //Get un liste de jeu
         requeteAPI.getJSONArray(apiUrl, new RequeteAPI.RequeteJSONArrayCallback() {
             @Override
             public void onSuccess(JSONArray response) {
-                listeJeux.clear();
+                List<Jeu> nouveauxJeux = new ArrayList<>();
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject jeuObject = response.getJSONObject(i);
-                        String imageUrl = jeuObject.getString("image"); // Get the image URL
+                        String imageUrl = jeuObject.optString("image", "");
 
-                        // Handle protocol-relative URLs here:
                         if (imageUrl != null && imageUrl.startsWith("//")) {
-                            imageUrl = "https:" + imageUrl; // Prepend https:
+                            imageUrl = "https:" + imageUrl;
                         }
 
                         Jeu jeu = new Jeu(
                                 jeuObject.getInt("id"),
                                 jeuObject.getString("name"),
-                                imageUrl // Use the modified imageUrl
+                                imageUrl
                         );
-                        listeJeux.add(jeu);
+                        nouveauxJeux.add(jeu);
                     }
-                    // ici avant : jeuxAdapter.notifyDataSetChanged();
-                    // Mettre à jour l'adaptateur avec la nouvelle liste et le listener
-                    jeuxAdapter = new JeuxAdapter(listeJeux, Recherche.this); // Réinitialisez l'adaptateur avec le listener
-                    items.setAdapter(jeuxAdapter); // Réaffectez l'adaptateur au RecyclerView
+
+                    listeJeux.clear();
+                    listeJeux.addAll(nouveauxJeux);
+                    jeuxAdapter.notifyDataSetChanged();
+
+                    Log.d(TAG, "Adapter mis à jour avec " + listeJeux.size() + " jeux.");
+
                 } catch (JSONException e) {
                     Log.e(TAG, "Erreur lors du parsing JSON", e);
                     Toast.makeText(Recherche.this, "Erreur lors du traitement des données des jeux", Toast.LENGTH_SHORT).show();
+                    listeJeux.clear();
+                    jeuxAdapter.notifyDataSetChanged();
                 }
             }
 

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,9 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
     private int idUtilisateur;
     private String nomUtilisateur;
 
+    private EditText nouveauCom;
+    private Button btnEnvoyerCom;
+
     ImageView page_accueil, page_connexion, page_principal, page_ajoutJeu, page_jeu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,7 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
         headerText = header.findViewById(R.id.titre_page);
         headerText.setText(getString(R.string.Jeu));
 
+        //Récupéation des intents
         Intent intent = getIntent();
         idJeu = intent.getIntExtra("ID_JEU",1);
         idUtilisateur = intent.getIntExtra("ID_UTILISATEUR", 1);
@@ -81,6 +87,9 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
         commentaireAdapteur = new CommentaireAdapteur(listeCom,idUtilisateur, this);
         items.setAdapter(commentaireAdapteur);
 
+        nouveauCom = findViewById(R.id.ecrire_commentaire);
+        btnEnvoyerCom = findViewById(R.id.bouton_ajouter_com);
+
         page_accueil = header.findViewById(R.id.page_accueil_horizon);
         page_connexion = header.findViewById(R.id.page_connexion);
         page_principal = footer.findViewById(R.id.icone_accueil);
@@ -92,13 +101,16 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
         page_principal.setOnClickListener(this);
         page_ajoutJeu.setOnClickListener(this);
         page_jeu.setOnClickListener(this);
+        btnEnvoyerCom.setOnClickListener(this);
 
         requeteAPI = new RequeteAPI(this);
 
+        //Remplir les infos
         remplirInfo();
         remplirCommentaire();
     }
 
+    //Gère les clicks
     @Override
     public void onClick(View v) {
         if (v == page_accueil){
@@ -126,9 +138,30 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
             intent.putExtra("ID_UTILISATEUR", idUtilisateur);
             intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
+        } else if(v == btnEnvoyerCom){
+            boolean aDejaCommente = false;
+            for (Commentaire commentaireExistant : listeCom) {
+                if (commentaireExistant.getIdUser() == idUtilisateur) {
+                    aDejaCommente = true;
+                    break;
+                }
+            }
+
+            if (aDejaCommente) {
+                Toast.makeText(this, "Vous avez déjà laissé un commentaire pour ce jeu.", Toast.LENGTH_LONG).show();
+            } else {
+                String contenuNouveauCom = nouveauCom.getText().toString().trim();
+
+                if (contenuNouveauCom.isEmpty()) {
+                    Toast.makeText(this, "Le commentaire ne peut pas être vide.", Toast.LENGTH_SHORT).show();
+                } else {
+                    envoyerNouveauCommentaire(contenuNouveauCom);
+                }
+            }
         }
     }
 
+    //Remplir les infos d'un jeu mais pas les commentaires
     public void remplirInfo(){
         String urlRecupJeu = "https://equipe100.tch099.ovh/api/jeux/";
         StringBuilder urlBuilder = new StringBuilder(urlRecupJeu);
@@ -170,16 +203,19 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
         });
     }
 
+    //Remplir les commentaires d'un jeu
     public void remplirCommentaire(){
         String urlRecupCommentaire = "https://equipe100.tch099.ovh/api/jeux/commentaire/";
         StringBuilder urlBuilder = new StringBuilder(urlRecupCommentaire);
         urlBuilder.append(idJeu);
-        Log.d(TAG, "URL Commentaires: " + urlBuilder.toString()); // Log l'URL appelée
+        urlBuilder.append("?id_utilisateur=");
+        urlBuilder.append(idUtilisateur);
+        Log.d(TAG, "URL Commentaires: " + urlBuilder.toString());
 
         requeteAPI.getJSONArray(urlBuilder.toString(), new RequeteAPI.RequeteJSONArrayCallback() {
             @Override
             public void onSuccess(JSONArray response) {
-                Log.d(TAG, "Commentaires reçus (onSuccess): " + response.toString()); // Log la réponse succès
+                Log.d(TAG, "Commentaires reçus (onSuccess): " + response.toString());
                 List<Commentaire> nouveauxCommentaires = new ArrayList<>();
                 try {
                     for (int i = 0; i < response.length(); i++) {
@@ -192,39 +228,26 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
                         Commentaire Com = new Commentaire(idUser,username,lastMaj,contenu);
                         nouveauxCommentaires.add(Com);
                     }
-                    // Mise à jour de la liste seulement si pas d'erreur de parsing
                     listeCom.clear();
                     listeCom.addAll(nouveauxCommentaires);
                     commentaireAdapteur.notifyDataSetChanged();
-                    // Optionnel: Gérer l'affichage du message "aucun commentaire" ici
-                    // verifierVisibiliteListeVide();
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Erreur lors du parsing JSON des commentaires", e);
-                    // Ne pas forcément afficher un Toast ici, car ça pourrait être le cas "réponse non-JSONArray"
-                    // Si vous voulez être sûr, vérifiez si la réponse brute est vide ou non-JSON
                     Toast.makeText(jeuCommentaire.this, "Erreur lors du traitement des données des commentaires reçus.", Toast.LENGTH_SHORT).show();
-                    // Assurez-vous que la liste est vide et notifiez l'adaptateur
                     listeCom.clear();
                     commentaireAdapteur.notifyDataSetChanged();
-                    // Optionnel: Gérer l'affichage du message "aucun commentaire" ici aussi
-                    // verifierVisibiliteListeVide();
                 }
             }
 
             @Override
             public void onError(VolleyError error) {
                 if (error.networkResponse != null && error.networkResponse.statusCode == 404) {
-                    // Erreur 404: Considéré comme "Aucun commentaire trouvé" - Pas une vraie erreur pour l'utilisateur
                     Log.d(TAG, "Erreur 404 reçue pour les commentaires - Traité comme liste vide.");
-                    listeCom.clear(); // Vider la liste locale
-                    commentaireAdapteur.notifyDataSetChanged(); // Mettre à jour l'UI pour montrer une liste vide
-                    // Optionnel: Gérer l'affichage du message "aucun commentaire" ici
-                    // verifierVisibiliteListeVide();
+                    listeCom.clear();
+                    commentaireAdapteur.notifyDataSetChanged();
                 } else {
-                    // --- AUTRES ERREURS (500, réseau, etc.) ---
                     Log.e(TAG, "Erreur lors de la requête API des commentaires: " + error.toString());
-                    // Log détails supplémentaires si disponibles
                     if (error.networkResponse != null) {
                         Log.e(TAG, "Status Code Erreur Commentaires: " + error.networkResponse.statusCode);
                         try {
@@ -232,16 +255,13 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
                             Log.e(TAG, "Corps Erreur Commentaires: " + body);
                         } catch (Exception e) { /* Ignorer */ }
                     }
-                    // Afficher le Toast pour les vraies erreurs
                     Toast.makeText(jeuCommentaire.this, "Erreur serveur lors de la récupération des commentaires.", Toast.LENGTH_SHORT).show();
-                    // Optionnellement, vider la liste aussi en cas d'erreur pour ne pas montrer d'anciennes données
-                    // listeCom.clear();
-                    // commentaireAdapteur.notifyDataSetChanged();
                 }
             }
         });
     }
 
+    //Quand on click sur le bouton pour supprimer un commentaire
     @Override
     public void onDeleteClick(final int position) {
         Log.d(TAG, "Demande de suppression pour la position : " + position);
@@ -257,19 +277,18 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
 
         final Commentaire commentaireASupprimer = listeCom.get(position);
 
-        // Vérification de propriété (sécurité côté client)
+        //Regarder que le user qui est connecter veut supprimer son commentaire et pas celui des autres
         if (commentaireASupprimer.getIdUser() != this.idUtilisateur) {
             Log.w(TAG, "Tentative de suppression non autorisée (client) par user " + this.idUtilisateur + " sur commentaire de user " + commentaireASupprimer.getIdUser());
             Toast.makeText(this, "Vous ne pouvez supprimer que vos propres commentaires.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Boîte de dialogue de confirmation
+        //Confirmation pour supprimer un commentaire
         new AlertDialog.Builder(this)
                 .setTitle("Confirmer Suppression")
                 .setMessage("Êtes-vous sûr de vouloir supprimer ce commentaire ? Cette action est irréversible.")
                 .setPositiveButton("Oui, Supprimer", (dialog, which) -> {
-                    // --- Construction du Corps JSON ---
                     JSONObject requestBody = new JSONObject();
                     try {
                         requestBody.put("id_jeu", idJeu);
@@ -284,7 +303,6 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
 
                     Log.d(TAG, "Appel API DELETE vers: " + urlDelete);
 
-                    // --- Appel de la méthode de RequeteAPI ---
                     requeteAPI.postJSONObject(urlDelete, requestBody, new RequeteAPI.RequeteJSONObjectCallback() {
 
                         @Override
@@ -298,47 +316,83 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
                                 if (success) {
                                     Toast.makeText(jeuCommentaire.this, "Commentaire supprimé !", Toast.LENGTH_SHORT).show();
 
-                                    // --- MISE À JOUR DU RECYCLERVIEW ---
-                                    // 1. Vérifier si la position est toujours valide (par sécurité)
                                     if (position >= 0 && position < listeCom.size()) {
-                                        // 2. Retirer l'élément de la liste locale
                                         listeCom.remove(position);
-                                        // 3. Notifier l'adaptateur de la suppression à cette position spécifique
                                         commentaireAdapteur.notifyItemRemoved(position);
-                                        // 4. Notifier l'adaptateur que les positions des éléments suivants ont changé
-                                        //    (Important pour que les clics futurs pointent vers les bons éléments)
                                         commentaireAdapteur.notifyItemRangeChanged(position, listeCom.size());
                                         Log.d(TAG,"RecyclerView mis à jour après suppression à la position: " + position);
                                     } else {
-                                        // La position n'est plus valide (très improbable ici, mais bonne vérification)
                                         Log.w(TAG, "Position invalide (" + position + ") après retour succès API. Taille liste: " + listeCom.size() + ". Rafraîchissement complet.");
-                                        // Solution de repli : recharger toute la liste
                                         remplirCommentaire();
                                     }
-                                    // --- FIN MISE À JOUR RECYCLERVIEW ---
 
                                 } else {
-                                    // L'API a retourné success: false
                                     Log.w(TAG, "L'API a indiqué un échec logique pour la suppression: " + message);
                                     Toast.makeText(jeuCommentaire.this, "Échec de la suppression: " + message, Toast.LENGTH_LONG).show();
-                                    // Pas de mise à jour de l'UI ici car la suppression n'a pas eu lieu
                                 }
-                            } catch (Exception e) { // Attraper une exception plus large au cas où
+                            } catch (Exception e) {
                                 Log.e(TAG, "Erreur lors du traitement de la réponse succès API", e);
                                 Toast.makeText(jeuCommentaire.this, "Réponse inattendue du serveur après suppression.", Toast.LENGTH_SHORT).show();
-                                // En cas d'erreur ici, on pourrait quand même tenter de rafraîchir la liste ? C'est discutable.
-                                // remplirCommentaire();
                             }
                         }
 
                         @Override
                         public void onError(VolleyError error) {
-                            Log.e(TAG,"Ça pas marcher CAWLISS: " + error);
+                            Log.e(TAG,"Ça pas marcher erreur: " + error);
                         }
                     });
                 })
-                .setNegativeButton("Annuler", null) // L'utilisateur annule
-                .setIcon(android.R.drawable.ic_dialog_alert) // Utilisez ic_dialog_warn ou ic_dialog_alert
+                .setNegativeButton("Annuler", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    //Pour ajouter un nouveau commentaire à un jeu
+    private void envoyerNouveauCommentaire(String contenu) {
+        String urlAjoutCommentaire = "https://equipe100.tch099.ovh/api/ajoutCommentaire";
+
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("id_jeu", idJeu);
+            requestBody.put("id_utilisateur", idUtilisateur);
+            requestBody.put("contenu", contenu);
+
+            Log.d(TAG, "Préparation de l'envoi du commentaire: " + requestBody.toString());
+
+        } catch (JSONException e) {
+            Log.e(TAG, "Erreur lors de la création du JSON pour l'ajout de commentaire", e);
+            Toast.makeText(this, "Erreur interne lors de la préparation du commentaire.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        requeteAPI.postJSONObject(urlAjoutCommentaire, requestBody, new RequeteAPI.RequeteJSONObjectCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.d(TAG, "Commentaire ajouté avec succès. Réponse API: " + response.toString());
+                Toast.makeText(jeuCommentaire.this, "Commentaire ajouté !", Toast.LENGTH_SHORT).show();
+
+                nouveauCom.setText("");
+
+                remplirCommentaire();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.e(TAG, "Erreur lors de l'envoi du commentaire à l'API", error);
+                if (error.networkResponse != null) {
+                    Log.e(TAG, "Status Code Erreur Ajout: " + error.networkResponse.statusCode);
+                    try {
+                        String responseBody = new String(error.networkResponse.data, "utf-8");
+                        Log.e(TAG, "Corps Erreur Ajout: " + responseBody);
+                        Toast.makeText(jeuCommentaire.this, "Erreur serveur lors de l'ajout du commentaire.", Toast.LENGTH_LONG).show();
+
+                    } catch (Exception e) {
+                        Toast.makeText(jeuCommentaire.this, "Erreur serveur lors de l'ajout du commentaire.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(jeuCommentaire.this, "Erreur réseau lors de l'ajout du commentaire.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }

@@ -33,8 +33,8 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
     TextView headerText;
     ImageView page_accueil, page_connexion, page_principal, page_ajoutJeu, page_jeu, imageJeu;
     private RecyclerView gamesRV;
-    private JeuxAdapter jeuxAdapter; // Adapter pour le RecyclerView
-    private List<Jeu> listeJeux = new ArrayList<>(); // Liste de jeux pour le RecyclerView
+    private JeuxAdapter jeuxAdapter;
+    private List<Jeu> listeJeux = new ArrayList<>();
 
     private int idUtilisateur;
     private String nomUtilisateur;
@@ -66,11 +66,12 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
         gamesRV = findViewById(R.id.gamesRecyclerView);
 
         gamesRV.setLayoutManager(new LinearLayoutManager(this));
-        jeuxAdapter = new JeuxAdapter(listeJeux, this); // 2. Passez 'this' comme listener à l'adaptateur
+        jeuxAdapter = new JeuxAdapter(listeJeux, this);
         gamesRV.setAdapter(jeuxAdapter);
-        imageJeu = gamesRV.findViewById(R.id.gameImageView); // Pas nécessaire ici
+        imageJeu = gamesRV.findViewById(R.id.gameImageView);
         requeteAPI = new RequeteAPI(this);
 
+        //Récupération des infos de l'intent
         Intent intentionRecommandation = getIntent();
         idUtilisateur = intentionRecommandation.getIntExtra("ID_UTILISATEUR", 1);
         nomUtilisateur = intentionRecommandation.getStringExtra("NAME_UTILISATEUR");
@@ -78,7 +79,7 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
         recommandationsJeux();
     }
 
-
+    //Gère les clicks sur les icones du footer et du header
     @Override
     public void onClick(View v) {
         if (v == page_accueil){
@@ -109,6 +110,7 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    //Quand on click sur un jeu de la liste
     @Override
     public void onItemClick(Jeu jeu) {
         Intent jeuInfo = new Intent(Recommandation.this, jeuCommentaire.class);
@@ -118,6 +120,7 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
         startActivity(jeuInfo);
     }
 
+    //Fait la requête pour récupérer les recommandations d'un utilisateur
     private void recommandationsJeux() {
         String baseUrl = "https://equipe100.tch099.ovh/api/Recommendations?";
         StringBuilder urlBuilder = new StringBuilder(baseUrl);
@@ -134,24 +137,21 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject jeuObject = response.getJSONObject(i);
-                        String imageUrl = jeuObject.getString("image"); // Get the image URL
+                        String imageUrl = jeuObject.getString("image");
 
-                        // Handle protocol-relative URLs here:
                         if (imageUrl != null && imageUrl.startsWith("//")) {
-                            imageUrl = "https:" + imageUrl; // Prepend https:
+                            imageUrl = "https:" + imageUrl;
                         }
 
                         Jeu jeu = new Jeu(
                                 jeuObject.getInt("id"),
                                 jeuObject.getString("name"),
-                                imageUrl // Use the modified imageUrl
+                                imageUrl
                         );
                         listeJeux.add(jeu);
                     }
-                    // ici avant : jeuxAdapter.notifyDataSetChanged();
-                    // Mettre à jour l'adaptateur avec la nouvelle liste et le listener
-                    jeuxAdapter = new JeuxAdapter(listeJeux, Recommandation.this); // Réinitialisez l'adaptateur avec le listener
-                    gamesRV.setAdapter(jeuxAdapter); // Réaffectez l'adaptateur au RecyclerView
+                    jeuxAdapter = new JeuxAdapter(listeJeux, Recommandation.this);
+                    gamesRV.setAdapter(jeuxAdapter);
                 } catch (JSONException e) {
                     Log.e(TAG, "Erreur lors du parsing JSON", e);
                     Toast.makeText(Recommandation.this, "Erreur lors du traitement des données des jeux", Toast.LENGTH_SHORT).show();
