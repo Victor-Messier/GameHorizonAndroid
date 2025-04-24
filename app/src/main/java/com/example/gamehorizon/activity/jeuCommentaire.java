@@ -110,7 +110,7 @@ public class jeuCommentaire extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
         }
         else if (v == page_principal){
-            Intent intent = new Intent(jeuCommentaire.this, jeuCommentaire.class);
+            Intent intent = new Intent(jeuCommentaire.this, Recommandation.class);
             intent.putExtra("ID_UTILISATEUR", idUtilisateur);
             intent.putExtra("NAME_UTILISATEUR", nomUtilisateur);
             startActivity(intent);
