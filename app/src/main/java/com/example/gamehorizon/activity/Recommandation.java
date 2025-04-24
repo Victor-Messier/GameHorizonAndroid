@@ -124,7 +124,7 @@ public class Recommandation extends AppCompatActivity implements View.OnClickLis
     private void recommandationsJeux() {
         String baseUrl = "https://equipe100.tch099.ovh/api/Recommendations?";
         StringBuilder urlBuilder = new StringBuilder(baseUrl);
-        urlBuilder.append("id_utilisateur=").append("36").append("&limite=20");
+        urlBuilder.append("id_utilisateur=").append(idUtilisateur).append("&limite=20");
 
         String apiUrl = urlBuilder.toString();
 

@@ -29,6 +29,18 @@ Ce fichier explique l'organisation des dossiers au sein de ce projet.
 * **Conrenu principal :** Contient la base des requêtes vers l'API.
 * **Raison d'être :** Sert a faire une base pour les requêtes qui seront envoyé
 
-### `PHP/`
-* **Conrenu principal :**
-* **Raison d'être :** 
+### `java/com.example.gamehorizon/res/drawable`
+
+* **Conrenu principal :** Contient les images et formes nécessaire au projet
+* **Raison d'être :** Sert à rassembler les images et formes 
+* à la même place
+
+### `java/com.example.gamehorizon/res/layout`
+
+* **Conrenu principal :** Contient les visuelles de toutes les pages
+* **Raison d'être :** Sert à rassembler tous les visuels du projet
+
+### `java/com.example.gamehorizon/res/values`
+
+* **Conrenu principal :** Contient les valeurs string enregistrer ensembles
+* **Raison d'être :** Rassemble les string pour pouvoir les réutilisers
